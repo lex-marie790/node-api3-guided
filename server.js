@@ -46,15 +46,14 @@ function lockout(req, req, next) {
 
 // write and use custom middleware that returns status code 403 and the message ‘you shall not pass!’ when the seconds on the clock are multiples of 3 and call next() for all other times.
 
-// function noPass(req, res, next) {
-//   let d = newDate()
-//   let n = d.getSeconds()
-//   if(n%3 === 0){
-//     res.status(403).json({message: 'you shall not pass'})
-//   } else {
-//     next()
-//   }
-// }
+function noPass(req, res, next) {
+  const n = date.getSeconds();
+  if(Number.isInteger(n/3)){
+    next({ code: 403, message: 'you shall not pass', seconds:n})
+  } else {
+    next()
+  }
+}
 
 server.use((error, req, res, next) => {
   res,status(400).json({ message: 'there was an error', error });
